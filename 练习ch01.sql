@@ -13,3 +13,16 @@ create table addressboot (
 
 -- 1.2
 alter table addressboot add column postal_code char(8) not null;
+
+
+
+
+-- 1.3 删除 Addressbook 表
+
+drop table addressboot;	-- 是 drop 还是 delete
+
+
+
+
+-- 1.4 判断题
+-- 否

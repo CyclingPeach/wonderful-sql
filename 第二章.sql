@@ -90,4 +90,5 @@ select product_name, sale_price, purchase_price
 -- 2.4
 select product_name, product_type, sale_price, sale_price*0.9, purchase_price, (sale_price*0.9 - purchase_price) as profit 
   from shop.product p 
- where (sale_price*0.9 - purchase_price) > 100;
+ where (sale_price*0.9 - purchase_price) > 100
+   and (product_type = '办公用品' or product_type = '厨房用具');

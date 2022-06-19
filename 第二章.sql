@@ -90,5 +90,88 @@ select product_name, sale_price, purchase_price
 -- 2.4
 select product_name, product_type, sale_price, sale_price*0.9, purchase_price, (sale_price*0.9 - purchase_price) as profit 
   from shop.product p 
- where (sale_price*0.9 - purchase_price) > 100
+ where sale_price*0.9 - purchase_price > 100
    and (product_type = '办公用品' or product_type = '厨房用具');
+   
+  
+-- 2.4.1
+select count(*)
+  from shop.product;
+  
+select count(purchase_price)
+  from shop.product p;
+ 
+select sum(p.sale_price) as sum_s, sum(p.purchase_price)
+  from shop.product p;
+ 
+select avg(sale_price) as avg_s, avg(purchase_price) as avg_p
+  from shop.product;
+
+select max(regist_date), min(regist_date)
+  from shop.product;
+
+select count(distinct(product_type))
+  from shop.product;
+
+select sum(sale_price), sum(distinct sale_price)
+  from shop.product;
+
+select sale_price
+  from shop.product;
+
+select distinct sale_price
+  from shop.product;
+
+ 
+-- 2.5
+select product_type, count(*) as num
+  from shop.product
+ group by product_type;
+select product_type, count(*)
+  from shop.product;
+
+select purchase_price, count(*)
+  from shop.product
+ group by purchase_price;
+
+
+select product_type , count(*)
+  from shop.product
+ group by product_type
+having count(*) = 2;
+
+-- ORDER BY
+select product_id , product_name , sale_price , purchase_price
+  from shop.product
+ order by sale_price product_id;
+
+select *
+  from shop.product
+ order by purchase_price desc;
+ 
+
+select product_type , count(*) as num
+  from shop.product
+ group by product_type
+ order by num desc;
+ 
+
+-- 2.7.3
+create table user (
+	id int not null auto_increment,
+	name varchar(5),
+	date_login date,
+	primary key (id)
+);
+
+select *
+  from shop.`user`
+ order by -date_login desc;
+ 
+select * from shop.`user`
+ order by name is null, name desc;
+select * from shop.`user`
+ order by isnull(name), name asc;
+ 
+select * from shop.`user`
+ order by coalesce(name, 'zzzzz') desc;

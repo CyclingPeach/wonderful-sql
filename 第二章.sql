@@ -175,3 +175,19 @@ select * from shop.`user`
  
 select * from shop.`user`
  order by coalesce(name, 'zzzzz') desc;
+ 
+
+-- ¡∑œ∞Ã‚
+-- 2.7Ã‚
+select product_type, sum(sale_price), sum(purchase_price)
+  from shop.product
+having sum(sale_price) > 1.5*sum(purchase_price);
+
+-- 2.8Ã‚
+select *
+  from shop.product
+ order by -regist_date asc;
+ 
+SELECT *
+  FROM product
+ORDER BY - regist_date , sale_price;

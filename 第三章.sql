@@ -354,27 +354,13 @@ select	sum(case when sale_price <= 1000 then 1 else 0 end) as low_price,
 		sum(case when sale_price > 3000 then 1 else 0 end) as high_price
   from product;
 
- 
- 
-
-
--- ≥¢ ‘
-select product_name,
-	(select case when sale_price <= 1000 then 1 else 0 end from product) as low_price,
-	(select case when sale_price > 1000 and sale_price <= 3000 then 1 else 0 end from product) as mid_price,
-	(select case when sale_price > 3000  then 1 else 0 end from product) as high_price
-  from product;
-	  
-
-select product_name, sale_price from product;
-
-select 
-	(select case when sale_price <= 1000 then 1 else 0 end as low_price from product) as low,
-	(select case when sale_price > 1000 and sale_price <= 3000 then 1 else 0 end as mid_price from product) as mid;
-  
-select case when sale_price <= 1000 then 1 else 0 end as low_price from product;
-select case when sale_price > 1000 and sale_price <= 3000 then 1 else 0 end as mid_price from product;
-
-select sale_price from (select sale_price from product);
-
-select sale_price from product;
+-- Ω‚ Õ
+select p.product_name, low_price, mid_price, high_price
+  from
+  	product as p
+ inner join (select product_name, case when sale_price <= 1000 then 1 else 0 end as low_price from product) as l
+	on p.product_name = l.product_name
+ inner join (select product_name, case when sale_price between 1001 and 3000 then 1 else 0 end as mid_price from product) as m
+	on p.product_name = m.product_name
+ inner join (select product_name, case when sale_price > 3000 then 1 else 0 end as high_price from product) as h
+	on p.product_name = h.product_name;

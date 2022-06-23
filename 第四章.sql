@@ -131,9 +131,41 @@ select * from product natural join shopproduct;
 select * from product natural join product2;
 
 
-select *
+select p1.*
   from product
  inner join product2
     on 
 
+    
+select s.shop_id, s.shop_name, s.product_id, p.product_name, p.sale_price
+  from product p 
+  left outer join shopproduct s
+    on s.product_id = p.product_id;
 
+select s.shop_id, s.shop_name, s.product_id, p.product_name, p.sale_price
+  from product p 
+ inner join shopproduct s
+    on s.product_id = p.product_id;
+
+select product_id, product_name, sale_price
+  from product;
+
+select p.product_id, p.product_name, p.sale_price, s.shop_id, s.shop_name, s.quantity
+  from product p
+  left outer join shopproduct s
+    on p.product_id = s.product_id
+ where s.quantity < 50;
+
+select p.product_id, p.product_name, p.sale_price, s.shop_id, s.shop_name, s.quantity
+  from product p
+  left outer join (select * from shopproduct where quantity < 50) s
+    on p.product_id = s.product_id;
+   
+   
+select s.shop_id, s.shop_name, s.product_id, p.product_name, p.sale_price, i.inventory_quantity
+  from shopproduct s 
+ inner join product p
+    on s.product_id = p.product_id
+ inner join inventoryproduct i
+    on s.product_id = i.product_id
+ where i.inventory_id = 'P001';

@@ -169,3 +169,91 @@ select s.shop_id, s.shop_name, s.product_id, p.product_name, p.sale_price, i.inv
  inner join inventoryproduct i
     on s.product_id = i.product_id
  where i.inventory_id = 'P001';
+ 
+
+
+-- 4.2.4.1 非等值自左连接（self join）
+
+select p1.product_id, p1.product_name, p1.sale_price, p2.product_id as p2_id,
+	   p2.product_name as p2_name, p2.sale_price as p2_price
+  from product p1
+  left outer join product p2
+    on p1.sale_price <= p2.sale_price;
+
+
+select product_id, product_name, sale_price, count(p2_id) as my_rank
+  from (
+		select p1.product_id, p1.product_name, p1.sale_price, p2.product_id as p2_id,
+			   p2.product_name as p2_name, p2.sale_price as p2_price
+		  from product p1
+		  left outer join product p2
+		    on p1.sale_price <= p2.sale_price
+		) as x
+ group by product_id, product_name, sale_price
+ order by my_rank;
+
+
+
+
+select product_id, product_name, sale_price, sum(p2_price) as cum_price
+  from (
+		select p1.product_id, p1.product_name, p1.sale_price, p2.product_id p2_id,
+			   p2.product_name p2_name, p2.sale_price p2_price
+		  from product p1
+		  left outer join product p2
+		    on p1.sale_price >= p2.sale_price
+		 order by p1.sale_price) as x
+  group by product_id, product_name, sale_price
+  order by sale_price, product_id;
+
+
+select * from product
+ union all
+select * from product2;
+
+
+select *
+  from product
+ where sale_price > 2000
+   and product_id not in (select product_id
+   							from product
+   						   where sale_price < 1.3 * purchase_price);
+   					
+select product_id, product_name, sale_price, (sale_price-purchase_price)/purchase_price as p
+  from product;
+
+
+
+
+SELECT * 
+  FROM Product
+ WHERE sale_price > 1.5 * purchase_price 
+   AND sale_price < 1500;
+
+  
+select P1.*
+  from (select *
+		  from product
+		 where sale_price > 1.5 * purchase_price) as P1
+ inner join (select * 
+			  from product
+			 where sale_price < 1500) as P2
+    on P1.product_id = P2.product_id;
+
+
+select * from product
+ union 
+select * from product2;
+
+select * 
+  from product
+ where product_id in (select product_id
+ 						from product2);
+
+
+SELECT * FROM Product WHERE sale_price < 1000
+UNION ALL
+SELECT * FROM Product WHERE sale_price < 1.5 * purchase_price;
+
+
+

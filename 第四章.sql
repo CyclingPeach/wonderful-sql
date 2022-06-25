@@ -283,7 +283,7 @@ SELECT SP.shop_id
 select p.product_id, p.product_name, p.sale_price, s.shop_id, s.shop_name, s.quantity
   from product as p
   left outer join shopproduct as s
-    on p.product_id = s.product_id
+    on p.product_id = s.product_id;
  where s.quantity < 50;
  
 select p.product_id, p.product_name, p.sale_price, s.shop_id, s.shop_name, s.quantity
@@ -292,3 +292,9 @@ select p.product_id, p.product_name, p.sale_price, s.shop_id, s.shop_name, s.qua
     on p.product_id = s.product_id;
  
 select * from shopproduct where quantity < 50;
+
+SELECT  product_type
+       ,regist_date
+       ,SUM(sale_price) AS sum_price
+  FROM product
+ GROUP BY product_type WITH ROLLUP;

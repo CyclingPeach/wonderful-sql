@@ -252,8 +252,43 @@ select *
 
 
 SELECT * FROM Product WHERE sale_price < 1000
-UNION ALL
+ UNION ALL
 SELECT * FROM Product WHERE sale_price < 1.5 * purchase_price;
 
 
+select * from shopproduct natural join  product;
 
+
+SELECT SP.shop_id
+       ,SP.shop_name
+       ,SP.product_id
+       ,P.product_name
+       ,P.sale_price
+  FROM Product AS P
+  LEFT OUTER JOIN ShopProduct AS SP
+    ON SP.product_id = P.product_id;
+    
+SELECT SP.shop_id
+       ,SP.shop_name
+       ,SP.product_id
+       ,P.product_name
+       ,P.sale_price
+  FROM Product AS P
+ INNER JOIN ShopProduct AS SP
+    ON SP.product_id = P.product_id;
+    
+   
+   
+-- 4.2.2.3
+select p.product_id, p.product_name, p.sale_price, s.shop_id, s.shop_name, s.quantity
+  from product as p
+  left outer join shopproduct as s
+    on p.product_id = s.product_id
+ where s.quantity < 50;
+ 
+select p.product_id, p.product_name, p.sale_price, s.shop_id, s.shop_name, s.quantity
+  from product as p
+  left outer join (select * from shopproduct where quantity < 50) as s
+    on p.product_id = s.product_id;
+ 
+select * from shopproduct where quantity < 50;

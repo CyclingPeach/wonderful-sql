@@ -297,4 +297,4 @@ SELECT  product_type
        ,regist_date
        ,SUM(sale_price) AS sum_price
   FROM product
- GROUP BY product_type WITH ROLLUP;
+ GROUP BY product_type, regist_date WITH ROLLUP;
